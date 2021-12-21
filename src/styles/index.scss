@@ -1,0 +1,26 @@
+:root {
+    --clr-default-100: #fff;
+    --clr-default-900: #000;
+}
+
+// Normalize
+@import "./settings/normalize.scss";
+
+// Genaral styles
+body {
+    font-weight: 400;
+    font-size: 1.6rem;
+    color: var(--clr-default-900);
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 320px;
+    min-height: 100%;
+}
+
+main {
+    flex-grow: 1;
+}
