@@ -1,11 +1,14 @@
 // Core
 import { FC } from "react";
 
+// Redux
+import { useTypedSelector } from "./hooks/redux";
+
 // Libs
 import { Routes, Route, Navigate } from "react-router-dom";
 
-// Conponents
-import { Layout } from "./layout/Layout";
+// Components
+import { AppLayout } from "./layout/Layout";
 
 // Routes
 import { AppRoutes } from "./routes/AppRoutes";
@@ -13,7 +16,8 @@ import { AuthRoutes } from "./routes/AuthRoutes";
 import { RouteNames } from "./routes/RouteNames";
 
 export const App: FC = () => {
-    const isAuth = true;
+    // **State
+    const { isAuth } = useTypedSelector((state) => state.auth);
 
     const renderAuthRoutes = (): any => {
         return AuthRoutes.map((route) => (
@@ -58,11 +62,9 @@ export const App: FC = () => {
         }
     };
 
-    console.log(renderRoutes());
-
     return (
         <Routes>
-            <Route element={<Layout />}>{renderRoutes()}</Route>
+            <Route element={<AppLayout />}>{renderRoutes()}</Route>
         </Routes>
     );
 };

@@ -2,19 +2,20 @@ import { FC } from "react";
 
 // Libs
 import { Outlet } from "react-router-dom";
+import { Layout } from "antd";
 
 // Components
-import { Header } from "../components/common/Header/Header";
-import { Footer } from "../components/common/Footer/Footer";
+import { AppHeader } from "../components/common/Header/Header";
 
-export const Layout: FC = () => {
+const { Content } = Layout;
+
+export const AppLayout: FC = () => {
     return (
-        <div className="wrapper">
-            <Header />
-            <main>
+        <Layout>
+            <AppHeader />
+            <Content>
                 <Outlet />
-            </main>
-            <Footer />
-        </div>
+            </Content>
+        </Layout>
     );
 };

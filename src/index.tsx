@@ -12,6 +12,7 @@ import { App } from "./App";
 
 // Styles
 import "./styles/index.scss";
+import "antd/dist/antd.css";
 
 ReactDOM.render(
     <Provider store={setupStore()}>
