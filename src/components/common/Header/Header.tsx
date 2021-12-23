@@ -2,6 +2,7 @@ import { FC } from "react";
 
 // Redux
 import { useTypedSelector } from "../../../hooks/redux";
+import { useDispatchedAction } from "../../../hooks/useDispatchedAction";
 
 // Libs
 import { Layout, Menu, Row } from "antd";
@@ -16,8 +17,11 @@ export const AppHeader: FC = () => {
     // **Props
     const navigate = useNavigate();
 
+    // Dispatch
+    const { logout } = useDispatchedAction();
+
     // **State
-    const { isAuth } = useTypedSelector((state) => state.auth);
+    const { isAuth, user } = useTypedSelector((state) => state.auth);
 
     return (
         <Header>
@@ -25,15 +29,27 @@ export const AppHeader: FC = () => {
                 {isAuth ? (
                     <>
                         <div style={{ color: "#fff", marginRight: 15 }}>
-                            Radnet12
+                            {user?.username}
                         </div>
                         <Menu theme="dark" mode="horizontal" selectable={false}>
-                            <Menu.Item key="1">Logout</Menu.Item>
+                            <Menu.Item key="1" onClick={() => logout()}>
+                                Logout
+                            </Menu.Item>
                         </Menu>
                     </>
                 ) : (
-                    <Menu theme="dark" mode="horizontal" selectable={false}>
-                        <Menu.Item key="1" onClick={() => navigate(RouteNames.LOGIN)}>Login</Menu.Item>
+                    <Menu
+                        theme="dark"
+                        mode="horizontal"
+                        selectable={false}
+                        style={{ width: "100%", justifyContent: "flex-end" }}
+                    >
+                        <Menu.Item
+                            key="1"
+                            onClick={() => navigate(RouteNames.LOGIN)}
+                        >
+                            Login
+                        </Menu.Item>
                     </Menu>
                 )}
             </Row>

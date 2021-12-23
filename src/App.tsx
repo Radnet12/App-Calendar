@@ -1,70 +1,28 @@
 // Core
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 // Redux
-import { useTypedSelector } from "./hooks/redux";
-
-// Libs
-import { Routes, Route, Navigate } from "react-router-dom";
+import { useDispatchedAction } from "./hooks/useDispatchedAction";
 
 // Components
-import { AppLayout } from "./layout/Layout";
+import { Router } from "./components/common/Router/Router";
 
-// Routes
-import { AppRoutes } from "./routes/AppRoutes";
-import { AuthRoutes } from "./routes/AuthRoutes";
-import { RouteNames } from "./routes/RouteNames";
+// Interface
+import { IUser } from "./models/IUser";
 
 export const App: FC = () => {
-    // **State
-    const { isAuth } = useTypedSelector((state) => state.auth);
+    // Dispatch
+    const { setAuth, setUser } = useDispatchedAction();
 
-    const renderAuthRoutes = (): any => {
-        return AuthRoutes.map((route) => (
-            <Route
-                key={route.path}
-                path={route.path}
-                element={<route.component />}
-            />
-        ));
-    };
-
-    const renderAppRoutes = (): any => {
-        return AppRoutes.map((route) => (
-            <Route
-                key={route.path}
-                path={route.path}
-                element={<route.component />}
-            />
-        ));
-    };
-
-    // Rendering all Routes according to authorization, last route is for no match component
-    const renderRoutes = (): any[] => {
-        if (isAuth) {
-            return [
-                ...renderAppRoutes(),
-                <Route
-                    key="no-match"
-                    path="*"
-                    element={<Navigate to={RouteNames.EVENT} />}
-                />,
-            ];
-        } else {
-            return [
-                ...renderAuthRoutes(),
-                <Route
-                    key="no-match"
-                    path="*"
-                    element={<Navigate to={RouteNames.LOGIN} />}
-                />,
-            ];
+    useEffect(() => {
+        if (localStorage.getItem("auth")) {
+            setAuth(true);
+            setUser({
+                username: localStorage.getItem("username"),
+            } as IUser);
         }
-    };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    return (
-        <Routes>
-            <Route element={<AppLayout />}>{renderRoutes()}</Route>
-        </Routes>
-    );
+    return <Router />;
 };
