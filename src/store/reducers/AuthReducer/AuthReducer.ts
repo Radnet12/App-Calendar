@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { login } from "./AuthReducerThunk";
 
 // Interface
 import { AuthState } from "./AuthReducerTypes";
 import { IUser } from "../../../models/IUser";
+
+// Thunk
+import { login } from "./AuthReducerThunk";
 
 const initialState: AuthState = {
     isAuth: false,

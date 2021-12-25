@@ -1,16 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-// Libs
-import axios from "axios";
-
 // Interface
 import { IUser } from "../../../models/IUser";
+
+// API
+import ApiService from "../../../services/ApiService";
 
 export const login = createAsyncThunk(
     "user/fetchUsers",
     async ({ username, password }: IUser, { rejectWithValue }) => {
         try {
-            const response = await axios.get<IUser[]>("users.json");
+            const response = await ApiService.getUsers();
 
             if (response?.data) {
                 const user = response.data.find(
